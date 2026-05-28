@@ -1,0 +1,39 @@
+/* Structure of binary tree node
+class Node{
+public:
+    int data;
+    Node* left, right;
+    Node(int item)
+    {
+        data = item;
+        left = nullptr;
+        right = nullptr;
+    }
+}
+*/
+class Solution {
+  public:
+  void traverse(Node* root, int hd, map<int, int>& registry) {
+        if (!root) {
+            return;
+        }
+
+        registry[hd] += root->data;
+
+        traverse(root->left, hd - 1, registry);
+        traverse(root->right, hd + 1, registry);
+    }
+    vector<int> verticalSum(Node* root) {
+     
+        map<int, int> registry;
+        vector<int> res;
+
+        traverse(root, 0, registry);
+
+        for (auto const& [hd, sum] : registry) {
+            res.push_back(sum);
+        }
+
+        return res;
+    }
+};
